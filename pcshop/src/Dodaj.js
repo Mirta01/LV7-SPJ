@@ -2,9 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {Button, InputGroup, FormControl} from 'react-bootstrap'
 import {useState} from 'react';
-import {useNavigate} from "react-router-dom";
-
-const baseURL = "http://localhost/LV7/php/pcshop.php";
 
 function Dodaj()
 {

@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import {Link} from "react-router-dom";
+import {Button} from 'react-bootstrap'
+
 
 const baseURL = "http://localhost/LV7/php/read.php";
 
@@ -37,8 +40,14 @@ function Ucitaj()
                     <td>{x.model}</td>
                     <td>{x.cijena} kn</td>
                     <td>{x.kolicina}</td>
-                    <td><button className='btn btn-outline-danger' onClick={()=>{deleteConform(x.id)}}>Delete</button></td>
-                    <td><button className='btn btn-outline-dark' >Edit</button></td>
+                    <td>
+                        <Button variant='outline-danger' onClick={()=>{deleteConform(x.id)}}>Delete</Button>
+                    </td>
+                    <td>
+                        <Link to={"/azuriraj/"+x.id}>
+                            <Button variant='outline-dark'>Edit</Button>
+                        </Link>
+                    </td>
                 </tr>)
             })}
             </tbody>
@@ -48,16 +57,16 @@ function Ucitaj()
 
 }
 
- function deleteConform(id) {
-     if (window.confirm("Are you sure?")) {
-         deleteArtikl(id);
-     }
- }
+function deleteConform(id) {
+    if (window.confirm("Are you sure?")) {
+        deleteArtikl(id);
+    }
+}
 
- async function deleteArtikl(id)
- {
+async function deleteArtikl(id)
+{
     try {
-        const deleteAr = await axios.post("http://localhost/LV7/php/delete.php", {
+        await axios.post("http://localhost/LV7/php/delete.php", {
             id: id,
         },
         {
@@ -70,6 +79,6 @@ function Ucitaj()
     {
         console.log(error);
     }
- }
+}
 
 export default Ucitaj;
