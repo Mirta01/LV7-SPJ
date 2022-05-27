@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
-import {Button} from 'react-bootstrap'
+import {Button, InputGroup, FormControl} from 'react-bootstrap'
 
 
 const baseURL = "http://localhost/LV7/php/read.php";
@@ -16,8 +16,15 @@ function Ucitaj()
         });
     },[]);
 
+    const [search, setSearch] = useState('');
+
     return (
         <>
+        <InputGroup className="mb-3" onChange={(e) => setSearch(e.target.value)}>
+            <InputGroup.Text id="basic2">Search</InputGroup.Text>
+            <FormControl>
+            </FormControl>
+        </InputGroup>
         <table className="table table-striped">
             <thead>
                 <tr>
@@ -33,22 +40,30 @@ function Ucitaj()
             </thead>
             <tbody>
             {artikl.map(x=>{
-                return(<tr key = {x.id.toString()}>
-                    <td>{x.id}</td>
-                    <td>{x.naziv}</td>
-                    <td>{x.proizvodac}</td>
-                    <td>{x.model}</td>
-                    <td>{x.cijena} kn</td>
-                    <td>{x.kolicina}</td>
-                    <td>
-                        <Button variant='outline-danger' onClick={()=>{deleteConform(x.id)}}>Delete</Button>
-                    </td>
-                    <td>
-                        <Link to={"/azuriraj/"+x.id}>
-                            <Button variant='outline-dark'>Edit</Button>
-                        </Link>
-                    </td>
-                </tr>)
+                if(x.naziv.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                    x.proizvodac.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                    x.model.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                    x.cijena.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                    x.kolicina.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+                {
+                    return(<tr key = {x.id.toString()}>
+                        <td>{x.id}</td>
+                        <td>{x.naziv}</td>
+                        <td>{x.proizvodac}</td>
+                        <td>{x.model}</td>
+                        <td>{x.cijena} kn</td>
+                        <td>{x.kolicina}</td>
+                        <td>
+                            <Button variant='outline-danger' onClick={()=>{deleteConform(x.id)}}>Delete</Button>
+                        </td>
+                        <td>
+                            <Link to={"/azuriraj/"+x.id}>
+                                <Button variant='outline-dark'>Edit</Button>
+                            </Link>
+                        </td>
+                    </tr>)
+                }
+                return (<></>);
             })}
             </tbody>
         </table>
