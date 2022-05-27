@@ -1,11 +1,14 @@
 <?php
 include "connection.php";
 header('Content-type: text/json');
-header('Content-type: application/json; charset=utf-8');
+header('Content-type: aplication/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
 
-isset($_POST["id"]);
+if(isset($_POST["id"]))
+{
+    $sQuery = "DELETE FROM artikli WHERE id=".$_POST["id"].";";
+    $oRecord = $Connection->query($sQuery);
+}
 
-$sQuery = "DELETE FROM artikli WHERE id=${id}";
-$oRecord = $Connection->query($sQuery);
-			
 ?>

@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import Azuriraj from './Azuriraj';
-import Obrisi from './Obrisi';
 
 const baseURL = "http://localhost/LV7/php/read.php";
 
@@ -39,7 +37,7 @@ function Ucitaj()
                     <td>{x.model}</td>
                     <td>{x.cijena} kn</td>
                     <td>{x.kolicina}</td>
-                    <td><button className='btn btn-outline-danger' onClick={`deleteConform({x.id})`}>Delete</button></td>
+                    <td><button className='btn btn-outline-danger' onClick={()=>{deleteConform(x.id)}}>Delete</button></td>
                     <td><button className='btn btn-outline-dark' >Edit</button></td>
                 </tr>)
             })}
@@ -50,8 +48,6 @@ function Ucitaj()
 
 }
 
-// onClick={Azuriraj(x.id)}
-
  function deleteConform(id) {
      if (window.confirm("Are you sure?")) {
          deleteArtikl(id);
@@ -60,12 +56,20 @@ function Ucitaj()
 
  async function deleteArtikl(id)
  {
-     try {
-         const deleteAr = await axios.post("http://localhost/LV7/php/delete.php", {
-             id: id,});
-
-        setArtikl(deleteAr);
-     } catch (error) {console.log(error);}
+    try {
+        const deleteAr = await axios.post("http://localhost/LV7/php/delete.php", {
+            id: id,
+        },
+        {
+            headers : {
+                "Content-Type": "multipart/form-data"
+        }});
+        window.location.reload(false);
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
  }
 
 export default Ucitaj;

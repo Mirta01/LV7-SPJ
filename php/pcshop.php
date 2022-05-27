@@ -6,6 +6,6 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 include 'connection.php';
 
-$sQuery = "INSERT INTO artikli (id, naziv, proizvodac, model, cijena, kolicina) SELECT MAX(id) + 1, '".$_POST['naziv']."', '".$_POST['proizvodac']."', '".$_POST['model']."', '".$_POST['cijena']."', '".$_POST['kolicina']."' FROM artikli";
+$sQuery = "INSERT INTO artikli (id, naziv, proizvodac, model, cijena, kolicina) SELECT MAX(id) + 1, '".$_POST['naziv']."', '".$_POST['proizvodac']."', '".$_POST['model']."', ".$_POST['cijena'].", ".$_POST['kolicina']." FROM artikli";
 $oRecord = $Connection->query($sQuery);
 ?>
