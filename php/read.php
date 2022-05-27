@@ -8,7 +8,7 @@ include 'connection.php';
 
 if (isset($_GET["id"]))
 {
-    $sQuery = "SELECT * FROM artikli";
+    $sQuery = "SELECT * FROM artikli WHERE id=".$_GET["id"];
     $oRecord = $Connection->query($sQuery);
     $oRow = $oRecord->fetch(PDO::FETCH_BOTH);
 
